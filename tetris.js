@@ -77,18 +77,17 @@ function createPiece(type) {
 
 const colors = [
     null,
-    'red',
+    'purple',
+    'yellow',
+    'orange',
     'blue',
     'cyan',
-    'green',
-    'orange',
-    'yellow',
-    'purple'
-
+    'lime',
+    'red',
 ]
 
 //surface de jeu de 12 block de large et 20 block de haut
-const arena = createMatrix(12, 20);
+const arena = createMatrix(10, 20);
 
 //design du tetromino
 function draw() {
@@ -103,7 +102,7 @@ function drawMatrix(matrix, offset) {
     matrix.forEach((row, y) => {
         row.forEach((value, x) => {
             if (value !== 0) {
-                context.fillStyle = 'red';
+                context.fillStyle = colors[value];
                 context.fillRect(x + offset.x,
                                 y + offset.y,
                                 1, 1);

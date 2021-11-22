@@ -178,6 +178,14 @@ function update(time = 0) {
         player.pos.y++;
         dropCounter = 0;
     }
+    // fonction de collision du bas de la table de jeu (arena)
+    if (collide(arena, player)) {
+        player.pos.y--;
+        merge(arena, player);
+        playerReset();
+        arenaSweep();
+        updateScore();
+    }
    
     draw();
     requestAnimationFrame(update);
@@ -262,6 +270,7 @@ document.addEventListener('keydown', event => {
         playerRotate(-1);
     }
 })
+
 
 playerReset();
 updateScore();

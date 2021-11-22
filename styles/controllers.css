@@ -1,0 +1,54 @@
+
+.controller {
+    margin-top: 4.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 14px;
+    grid-auto-rows: minmax(30px, auto);
+}
+@media screen and (min-width:1200px){
+    .controller{
+        display:none;
+    }
+}
+
+.controller-down {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+
+/* btn design 3d */
+.relief {
+    border: 1px solid white;
+    border-radius: 7px;
+    box-shadow: 0 9px #999;
+}
+/* animate on click */
+button:active {
+    background-color: #727272;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
+
+
+
+/* size A and B btn */
+.controller-rotation img{
+    width: 3rem;
+}
+.controller-rotation button{
+    margin-right: 0.5rem;
+}
+
+/* size direction btn */
+.direction{
+    width: 5rem;
+    height: 3rem;
+}
+@media screen and (max-width:400px){
+    .direction{
+        width: 4rem;
+        height: 3rem;
+    }
+}

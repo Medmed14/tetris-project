@@ -5,37 +5,58 @@ body {
     font-size: 2em;
     text-align: center;
 }
-
-canvas {
+/* main game table */
+#tetris {
     border: solid 0.2rem #fff;
     height: 80vh;
 }
-@media screen and (max-width:850px){
-    canvas {
+@media screen and (max-width: 850px) {
+    #tetris {
         border: solid 0.1rem #fff;
         height: 65vh;
     }
 }
-@media screen and (max-height:750px){
-    canvas {
+@media screen and (max-height: 750px) {
+    #tetris {
         border: solid 0.1rem #fff;
         height: 55vh;
     }
 }
 
+/* #preview {
+    border: solid 0.1rem #fff;
+    height: 20vh;
+} */
 
 .container-score {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    font-size: 1.6rem;
 }
 
 #score {
     margin-left: 0.5rem;
 }
-@media screen and (max-width:750px){
+@media screen and (max-width: 750px) {
     .container-score {
-    font-size: 1.3rem;
-        
+        font-size: 1.3rem;
+    }
+}
+
+.notice {
+    position: absolute;
+    margin-left: 2rem;
+    font-size: small;
+    color: rgb(119, 119, 119);
+    transition: ease-in 500ms;
+}
+.notice:hover {
+    color: rgb(255, 255, 255);
+    font-size: large;
+}
+@media screen and (max-width: 1200px) {
+    .notice {
+        display: none;
     }
 }

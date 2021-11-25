@@ -8,6 +8,7 @@
     <title>Tetris Game</title>
     <link href="/styles/main.css" rel="stylesheet" type="text/css">
     <link href="/styles/controllers.css" rel="stylesheet" type="text/css">
+    <link href="/styles/modal.css" rel="stylesheet" type="text/css">
 
 </head>
 
@@ -16,22 +17,43 @@
         <p>Score:</p>
         <p id="score"></p>
     </div>
+    <div class="notice">
+        <h4>Comment jouer ?</h4>
+        <p><i class="fas fa-arrow-left"></i> <i class="fas fa-arrow-right"></i> déplacements latéraux</p>
+        <p><i class="fas fa-arrow-down"></i> faire descendre le bloc</p>
+        <p>A ou a pour rotation horaire</p>
+        <p>Z ou z pour rotation anti-horaire</p>
+        <p>enjoy :-)</p>
+    </div>
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>GAME OVER</p>
+            <p>Votre score: </p><p id="score-final"></p>
+            <button id="replay-btn" class="relief" onClick="replay()">Relancer une partie</button>
+        </div>
+
+    </div>
+    <!-- <canvas id="preview" width="45" height="45"></canvas> -->
     <canvas id="tetris" width="200" height="400"></canvas>
-    <div class="notice"></div>
     <div class="controller">
         <div class="controller-rotation">
             <button id="A-ctrl" class="relief" onClick=" playerRotate(1)"><img src="images/A.png" alt="A"></button>
             <button id="relief" class="relief" onClick=" playerRotate(-1)"><img src="images/B.png" alt="B"></button>
         </div>
         <div class="controller-direction">
-            <button id="left-ctrl" class="direction relief" onClick=" playerMove(-1)"><i class="fas fa-arrow-left"></i></button>
-            <button id="right-ctrl" class="direction relief" onClick=" playerMove(1)"><i class="fas fa-arrow-right"></i></button>
+            <button id="left-ctrl" class="direction relief" onClick=" playerMove(-1)"><i
+                    class="fas fa-arrow-left"></i></button>
+            <button id="right-ctrl" class="direction relief" onClick=" playerMove(1)"><i
+                    class="fas fa-arrow-right"></i></button>
         </div>
         <div class="controller-down">
-            <button id="down-ctrl" class="direction relief" onClick=" playerDrop()"><i class="fas fa-arrow-down"></i></button>
+            <button id="down-ctrl" class="direction relief" onClick=" playerDrop()"><i
+                    class="fas fa-arrow-down"></i></button>
         </div>
     </div>
-   
+
     <script src="tetris.js"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-replace-svg="nest"></script>
 </body>

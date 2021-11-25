@@ -167,6 +167,39 @@ function playerMove(dir){
 let dropCounter = 0;
 let dropInterval = 1000;
 
+function speedScore() {
+    if(player.score <= 10){
+        dropInterval = 1000;
+    }else if(player.score > 10 && player.score <= 20){
+        dropInterval = 900;
+    }else if(player.score >20 && player.score <= 40){
+        dropInterval = 800;
+    }else if(player.score > 40 && player.score <= 100){
+        dropInterval = 700;
+    }else if(player.score > 100 && player.score <= 150){
+        dropInterval = 600;
+    }else if(player.score > 150 && player.score <= 200){
+        dropInterval = 550;
+    }else if(player.score > 200 && player.score <= 300){
+        dropInterval = 500;
+    }else if(player.score > 300 && player.score <= 400){
+        dropInterval = 450;
+    }else if(player.score > 400 && player.score <= 500){
+        dropInterval = 400;
+    }else if(player.score > 500 && player.score <= 600){
+        dropInterval = 350;
+    }else if(player.score > 600 && player.score <= 700){
+        dropInterval = 300;
+    }else if(player.score > 700 && player.score <= 800){
+        dropInterval = 250;
+    }else if(player.score > 900 && player.score <= 10000){
+        dropInterval = 200;
+    }
+    return dropInterval;
+}
+
+
+
 // fonction d'update continuelle
 let lastTime = 0;
 function update(time = 0) {
@@ -178,6 +211,8 @@ function update(time = 0) {
         player.pos.y++;
         dropCounter = 0;
     }
+    speedScore();
+
     // fonction de collision du bas de la table de jeu (arena)
     if (collide(arena, player)) {
         player.pos.y--;
@@ -185,17 +220,37 @@ function update(time = 0) {
         playerReset();
         arenaSweep();
         updateScore();
+        
     }
    
     draw();
     requestAnimationFrame(update);
 }
 
-// SCORE
+// SCORE en jeu
 function updateScore() {
     document.getElementById('score').innerText = player.score;
 }
+// SCORE final
+function finalScore() {
+    document.getElementById('score-final').innerText = player.score;
+}
 
+var modal = document.getElementById("myModal");
+var span = document.getElementsByClassName("close")[0];
+// GAME OVER
+function gameOver(){
+    modal.style.display = "block";
+    finalScore();
+    span.onclick = function() {
+        modal.style.display = "none";
+      }
+}
+
+//fonction click bouton replay
+function replay(){
+    window.location.reload();
+}
 
 // fonction de ccréation de tétrominos aléatoire
 function playerReset() {
@@ -206,8 +261,9 @@ function playerReset() {
 
     if (collide(arena, player)){
         arena.forEach(row => row.fill(0));
-        player.score = 0;
         updateScore();
+        gameOver();
+        clearInterval(interval);
     }
 }
 
@@ -269,7 +325,7 @@ document.addEventListener('keydown', event => {
     } else if (event.key === "z" || event.key === "Z") {
         playerRotate(-1);
     }
-})
+});
 
 
 playerReset();

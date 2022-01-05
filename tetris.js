@@ -1,18 +1,24 @@
 const canvas = document.getElementById('tetris');
 const context = canvas.getContext('2d');
 
+//audio
+const mainTheme = document.getElementById('main-audio');
+
+
+function mainAudio() {
+    mainTheme.play();
+}
 // pour mettre a l'échelle les éléments du jeu notamment les tétrominos
 context.scale(20, 20);
 
 function arenaSweep() {
     let rowCount = 1;
-   outer: for (let y = arena.length - 1; y > 0; --y) {
+    outer: for (let y = arena.length - 1; y > 0; --y) {
         for (let x = 0; x < arena[y].length; ++x) {
             if (arena[y][x] === 0) {
                 continue outer;
             }
         }
-
         const row = arena.splice(y, 1)[0].fill(0);
         arena.unshift(row);
         ++y;
@@ -24,13 +30,13 @@ function arenaSweep() {
 
 
 // fonction de detection de collision
-function collide(arena, player)  {
+function collide(arena, player) {
     const [m, o] = [player.matrix, player.pos];
     for (let y = 0; y < m.length; ++y) {
         for (let x = 0; x < m[y].length; ++x) {
             if (m[y][x] !== 0 && (arena[y + o.y] && arena[y + o.y][x + o.x]) !== 0) {
-                     return true;
-                 } 
+                return true;
+            }
         }
     }
     return false;
@@ -112,8 +118,8 @@ const arena = createMatrix(10, 20);
 function draw() {
     context.fillStyle = "#000"; // définit la couleur de remplissage du rectangle
     context.fillRect(0, 0, canvas.clientWidth, canvas.height); // dessine le rectangle à la position 0, 0 d'une largeur de celle du canvas et d'une hauteur de 50celle du canvas
-    
-    drawMatrix(arena, {x: 0, y: 0});
+
+    drawMatrix(arena, { x: 0, y: 0 });
     drawMatrix(player.matrix, player.pos);
 }
 
@@ -123,8 +129,8 @@ function drawMatrix(matrix, offset) {
             if (value !== 0) {
                 context.fillStyle = colors[value];
                 context.fillRect(x + offset.x,
-                                y + offset.y,
-                                1, 1);
+                    y + offset.y,
+                    1, 1);
             }
         });
     });
@@ -156,7 +162,7 @@ function playerDrop() {
 }
 
 //fonction qui empeche les tetrominos de sortir des bords (gauche/droit) de la matrice de jeu
-function playerMove(dir){
+function playerMove(dir) {
     player.pos.x += dir;
     if (collide(arena, player)) {
         player.pos.x -= dir;
@@ -192,11 +198,12 @@ function speedScore() {
         dropInterval = 300;
     }else if(player.score > 700 && player.score <= 800){
         dropInterval = 250;
-    }else if(player.score > 900 && player.score <= 10000){
+    }else if(player.score > 900 && player.score <= 100000){
         dropInterval = 200;
     }
     return dropInterval;
 }
+
 
 
 
@@ -211,8 +218,8 @@ function update(time = 0) {
         player.pos.y++;
         dropCounter = 0;
     }
+    // mainAudio();
     speedScore();
-
     // fonction de collision du bas de la table de jeu (arena)
     if (collide(arena, player)) {
         player.pos.y--;
@@ -220,9 +227,8 @@ function update(time = 0) {
         playerReset();
         arenaSweep();
         updateScore();
-        
+
     }
-   
     draw();
     requestAnimationFrame(update);
 }
@@ -235,20 +241,19 @@ function updateScore() {
 function finalScore() {
     document.getElementById('score-final').innerText = player.score;
 }
-
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
 // GAME OVER
-function gameOver(){
+function gameOver() {
     modal.style.display = "block";
     finalScore();
-    span.onclick = function() {
+    span.onclick = function () {
         modal.style.display = "none";
-      }
+    }
 }
 
 //fonction click bouton replay
-function replay(){
+function replay() {
     window.location.reload();
 }
 
@@ -259,7 +264,7 @@ function playerReset() {
     player.pos.y = 0;
     player.pos.x = (arena[0].length / 2 | 0) - (player.matrix[0].length / 2 | 0);
 
-    if (collide(arena, player)){
+    if (collide(arena, player)) {
         arena.forEach(row => row.fill(0));
         updateScore();
         gameOver();
@@ -272,7 +277,7 @@ function playerRotate(dir) {
     const pos = player.pos.x;
     let offset = 1;
     rotate(player.matrix, dir);
-    while(collide(arena, player)) {
+    while (collide(arena, player)) {
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > player.matrix[0].length) {
@@ -291,10 +296,10 @@ function rotate(matrix, dir) {
                 matrix[y][x]
 
             ] = [
-                matrix[y][x],
-                matrix[x][y]
+                    matrix[y][x],
+                    matrix[x][y]
 
-            ];
+                ];
         }
     }
     if (dir > 0) {
@@ -307,7 +312,7 @@ function rotate(matrix, dir) {
 
 // pour gérer les différents items de la grille de jeu
 const player = {
-    pos: {x: 5, y: 5},
+    pos: { x: 5, y: 5 },
     matrix: null,
     score: 0,
 }
@@ -326,7 +331,6 @@ document.addEventListener('keydown', event => {
         playerRotate(-1);
     }
 });
-
 
 playerReset();
 updateScore();
